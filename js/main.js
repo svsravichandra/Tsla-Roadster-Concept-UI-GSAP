@@ -37,9 +37,9 @@
     suction: $$('.suction path', slot),
   });
   // spin each wheel around its hub, not its (asymmetric) bounding box
-  const hub = (i, el) => (el.closest('.wheel-f') ? '302 318' : '908 318');
-  // plumes grow out of their nozzle: rear ones from the left edge, downward ones from the top
-  const plumeOrigin = (i, el) => (el.classList.contains('plume-rear') ? '0% 50%' : el.classList.contains('plume-front') ? '100% 50%' : '50% 0%');
+  const hub = (i, el) => (el.closest('.wheel-f') ? '908 318' : '302 318');
+  // plumes grow out of their nozzle: rear ones (car tail is on the left) from their right edge, downward ones from the top
+  const plumeOrigin = (i, el) => (el.classList.contains('plume-rear') ? '100% 50%' : el.classList.contains('plume-front') ? '0% 50%' : '50% 0%');
   const hero = carIn($('[data-car-hero]'));
   const launch = carIn($('[data-car-launch]'));
   const ghostCar = carIn($('[data-car-ghost]'));
@@ -264,12 +264,12 @@
     gsap.set(carEl, { x: startX + d / D_REF * span, skewX: -Math.min(8, mph / 8) });
     gsap.set(ghostEl, { x: startX + dg / D_REF * span });
     const squat = Math.max(0, 1 - t / .6) * Math.min(1, t * 10);
-    gsap.set(launch.body, { rotation: -1.8 * squat, transformOrigin: '85% 80%' });
+    gsap.set(launch.body, { rotation: -1.8 * squat, transformOrigin: '15% 80%' });
     gsap.set(launch.spokes, { rotation: d * 50, svgOrigin: hub });
     gsap.set(ghostCar.spokes, { rotation: dg * 50, svgOrigin: hub });
     // rear thrusters fire through the launch, flickering like venting gas
     const firing = t > .01 && t < T60 + .05;
-    gsap.set(launch.plumes.rear, { opacity: firing ? .55 + Math.random() * .45 : 0, scaleX: firing ? .7 + Math.random() * .5 : .2, transformOrigin: '0% 50%' });
+    gsap.set(launch.plumes.rear, { opacity: firing ? .55 + Math.random() * .45 : 0, scaleX: firing ? .7 + Math.random() * .5 : .2, transformOrigin: '100% 50%' });
     trackLines.style.backgroundPositionX = `${-d * 24}px`;
     launchBoost = mph / 7;
 

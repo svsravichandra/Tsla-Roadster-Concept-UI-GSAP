@@ -41,52 +41,49 @@
   </defs>
 </svg>
 
-<!-- Side profile, cloned into every [data-car] slot. Local origin: wheel contact patch centre is (610, 392). -->
+<!-- Side profile, nose to the right, cloned into every [data-car] slot. Local origin for the stunt rider: (610, 392) on the ground line. -->
 <template id="car-tpl">
   <svg class="car" viewBox="0 0 1200 420" aria-hidden="true">
     <g class="car-art">
-      <ellipse class="car-shadow" cx="610" cy="392" rx="520" ry="10"/>
+      <!-- nose faces right (direction of travel); rear wheel x=302, front wheel x=908 -->
+      <ellipse class="car-shadow" cx="600" cy="392" rx="540" ry="10"/>
       <g class="plumes">
-        <ellipse class="plume plume-rear" cx="1190" cy="262" rx="110" ry="26"/>
-        <ellipse class="plume plume-rear" cx="1170" cy="290" rx="80" ry="18"/>
-        <ellipse class="plume plume-down" cx="200" cy="400" rx="34" ry="80"/>
-        <ellipse class="plume plume-down" cx="610" cy="400" rx="40" ry="90"/>
-        <ellipse class="plume plume-down" cx="1030" cy="400" rx="34" ry="80"/>
-        <ellipse class="plume plume-front" cx="70" cy="280" rx="80" ry="20"/>
+        <ellipse class="plume plume-rear" cx="-44" cy="270" rx="100" ry="22"/>
+        <ellipse class="plume plume-rear" cx="-14" cy="288" rx="76" ry="16"/>
+        <ellipse class="plume plume-down" cx="150" cy="400" rx="34" ry="80"/>
+        <ellipse class="plume plume-down" cx="600" cy="400" rx="40" ry="90"/>
+        <ellipse class="plume plume-down" cx="1060" cy="400" rx="34" ry="80"/>
+        <ellipse class="plume plume-front" cx="1222" cy="292" rx="80" ry="18"/>
       </g>
       <g class="suction">
         <path d="M560 330 l20 18 l20 -18"/><path d="M560 354 l20 18 l20 -18"/>
         <path d="M640 330 l20 18 l20 -18"/><path d="M640 354 l20 18 l20 -18"/>
       </g>
       <g class="car-body">
-        <path class="ln body" d="M86 272 L210 234 L400 222 L470 212 L622 166 L772 166 L1030 202 L1106 214 L1108 296 L1102 316 L1004 316 L978 234 L838 234 L812 316 L398 316 L364 234 L240 234 L206 316 L104 316 Z"/>
-        <path class="facet" d="M86 272 L210 234 L400 222 L470 212 L486 236 L92 278 Z"/>
-        <path class="facet facet-rear" d="M772 166 L1030 202 L1106 214 L1107 228 L880 224 Z"/>
-        <path class="ln glass" d="M512 210 L628 176 L764 176 L874 198 L860 207 L524 214 Z"/>
-        <path class="sill" d="M398 316 L388 292 L820 292 L812 316 Z M104 316 L97 294 L215 294 L206 316 Z M1004 316 L996 294 L1107 294 L1102 316 Z"/>
-        <path class="ln detail" d="M92 278 L486 236 L1107 228"/>
-        <path class="ln detail" d="M420 290 L800 284"/>
-        <path class="ln detail" d="M562 214 L552 288"/>
-        <path class="ln detail" d="M742 284 L790 236 L846 232"/>
-        <path class="ln headlight" d="M92 268 L218 240"/>
-        <path class="ln taillight" d="M1052 207 L1106 214"/>
-        <g class="nozzles nozzles-rear"><circle cx="1094" cy="262" r="7"/><circle cx="1090" cy="290" r="7"/></g>
-        <g class="nozzles nozzles-all"><circle cx="200" cy="309" r="6"/><circle cx="610" cy="313" r="6"/><circle cx="1030" cy="307" r="6"/><circle cx="122" cy="282" r="6"/></g>
-      </g>
-      <g class="wheel wheel-f">
-        <circle class="ln tyre" cx="302" cy="318" r="74"/>
-        <circle class="ln rim" cx="302" cy="318" r="58"/>
-        <g class="spokes">
-          <line x1="302.0" y1="306.0" x2="302.0" y2="262.0"/><line x1="309.1" y1="308.3" x2="334.9" y2="272.7"/><line x1="313.4" y1="314.3" x2="355.3" y2="300.7"/><line x1="313.4" y1="321.7" x2="355.3" y2="335.3"/><line x1="309.1" y1="327.7" x2="334.9" y2="363.3"/><line x1="302.0" y1="330.0" x2="302.0" y2="374.0"/><line x1="294.9" y1="327.7" x2="269.1" y2="363.3"/><line x1="290.6" y1="321.7" x2="248.7" y2="335.3"/><line x1="290.6" y1="314.3" x2="248.7" y2="300.7"/><line x1="294.9" y1="308.3" x2="269.1" y2="272.7"/>
-        </g>
-        <circle class="hub" cx="302" cy="318" r="10"/>
+        <path class="ln body" d="M64 296 L56 252 Q180 226 300 214 Q560 136 640 168 L790 226 Q960 224 1150 280 L1134 302 L1002 308 A100 100 0 0 0 816 308 L398 310 A100 100 0 0 0 206 310 L84 304 Z"/>
+        <path class="facet" d="M790 226 Q960 224 1150 280 L1128 284 Q960 240 800 242 Z"/>
+        <path class="facet facet-rear" d="M56 252 Q180 226 300 214 Q560 136 640 168 L628 176 Q560 152 312 224 Q180 238 60 264 Z"/>
+        <path class="ln glass" d="M364 222 Q540 150 630 176 L756 226 Q560 232 364 222 Z"/>
+        <path class="sill" d="M398 310 L404 298 L810 296 L816 308 Z M1002 308 L1006 298 L1132 296 L1128 302 Z M206 310 L200 300 L80 298 L84 306 Z"/>
+        <path class="ln detail" d="M1144 286 L790 250 L60 272"/>
+        <path class="ln detail" d="M430 292 L790 290"/>
+        <path class="ln detail" d="M756 228 L746 296"/>
+        <path class="ln detail" d="M420 284 L456 248 L536 242"/>
+        <path class="ln headlight" d="M1060 262 L1144 284"/>
+        <path class="ln taillight" d="M58 256 L132 243"/>
+        <g class="nozzles nozzles-rear"><circle cx="62" cy="270" r="7"/><circle cx="68" cy="288" r="7"/></g>
+        <g class="nozzles nozzles-all"><circle cx="150" cy="305" r="6"/><circle cx="600" cy="309" r="6"/><circle cx="1060" cy="303" r="6"/><circle cx="1136" cy="292" r="6"/></g>
       </g>
       <g class="wheel wheel-r">
+        <circle class="ln tyre" cx="302" cy="318" r="74"/>
+        <circle class="ln rim" cx="302" cy="318" r="58"/>
+        <g class="spokes"><line x1="302.0" y1="306.0" x2="302.0" y2="262.0"/><line x1="309.1" y1="308.3" x2="334.9" y2="272.7"/><line x1="313.4" y1="314.3" x2="355.3" y2="300.7"/><line x1="313.4" y1="321.7" x2="355.3" y2="335.3"/><line x1="309.1" y1="327.7" x2="334.9" y2="363.3"/><line x1="302.0" y1="330.0" x2="302.0" y2="374.0"/><line x1="294.9" y1="327.7" x2="269.1" y2="363.3"/><line x1="290.6" y1="321.7" x2="248.7" y2="335.3"/><line x1="290.6" y1="314.3" x2="248.7" y2="300.7"/><line x1="294.9" y1="308.3" x2="269.1" y2="272.7"/></g>
+        <circle class="hub" cx="302" cy="318" r="10"/>
+      </g>
+      <g class="wheel wheel-f">
         <circle class="ln tyre" cx="908" cy="318" r="74"/>
         <circle class="ln rim" cx="908" cy="318" r="58"/>
-        <g class="spokes">
-          <line x1="908.0" y1="306.0" x2="908.0" y2="262.0"/><line x1="915.1" y1="308.3" x2="940.9" y2="272.7"/><line x1="919.4" y1="314.3" x2="961.3" y2="300.7"/><line x1="919.4" y1="321.7" x2="961.3" y2="335.3"/><line x1="915.1" y1="327.7" x2="940.9" y2="363.3"/><line x1="908.0" y1="330.0" x2="908.0" y2="374.0"/><line x1="900.9" y1="327.7" x2="875.1" y2="363.3"/><line x1="896.6" y1="321.7" x2="854.7" y2="335.3"/><line x1="896.6" y1="314.3" x2="854.7" y2="300.7"/><line x1="900.9" y1="308.3" x2="875.1" y2="272.7"/>
-        </g>
+        <g class="spokes"><line x1="908.0" y1="306.0" x2="908.0" y2="262.0"/><line x1="915.1" y1="308.3" x2="940.9" y2="272.7"/><line x1="919.4" y1="314.3" x2="961.3" y2="300.7"/><line x1="919.4" y1="321.7" x2="961.3" y2="335.3"/><line x1="915.1" y1="327.7" x2="940.9" y2="363.3"/><line x1="908.0" y1="330.0" x2="908.0" y2="374.0"/><line x1="900.9" y1="327.7" x2="875.1" y2="363.3"/><line x1="896.6" y1="321.7" x2="854.7" y2="335.3"/><line x1="896.6" y1="314.3" x2="854.7" y2="300.7"/><line x1="900.9" y1="308.3" x2="875.1" y2="272.7"/></g>
         <circle class="hub" cx="908" cy="318" r="10"/>
       </g>
     </g>
