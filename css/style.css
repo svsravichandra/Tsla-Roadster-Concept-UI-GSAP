@@ -74,13 +74,15 @@ main, .nav { position: relative; z-index: 2; }
 .car .ln { stroke: var(--bone); stroke-width: 1.4; vector-effect: non-scaling-stroke; }
 .car .body { fill: url(#paint); }
 .car .glass { fill: url(#glass); stroke-width: 1; }
-.car .sill { fill: #0b0b0c; opacity: .65; }
+.car .sill { fill: #08080a; opacity: .92; }
+.car .facet { fill: #fff; opacity: .07; }
+.car .facet-rear { opacity: .04; }
 .car .detail { fill: none; opacity: .5; stroke-width: 1; }
-.car .headlight { fill: none; stroke-width: 2.5; stroke-linecap: round; }
+.car .headlight { fill: none; stroke-width: 3; stroke-linecap: butt; }
 .car .taillight { fill: none; stroke: var(--signal); stroke-width: 3; stroke-linecap: round; }
 .car .tyre { fill: #0d0d0e; }
 .car .rim { fill: url(#rim); stroke-width: 1; }
-.car .spokes line { stroke: var(--bone); stroke-width: 5; opacity: .8; }
+.car .spokes line { stroke: var(--bone); stroke-width: 2.5; opacity: .85; }
 .car .hub { fill: var(--paint); }
 .car .car-shadow { fill: #000; opacity: .85; }
 .car .plume { fill: url(#vapour); opacity: 0; }
