@@ -142,12 +142,15 @@
     </div>
   </section>
 
-  <!-- LAUNCH: scroll-scrubbed race against the 2017 promise -->
+  <!-- LAUNCH: the 2026 car (solid) races the 2017 promise (dotted). 2026 leads every readout. -->
   <section class="launch" id="launch">
     <div class="launch-stage">
       <div class="launch-head">
         <span class="mono-label">01 — Launch control</span>
-        <p class="launch-hint">Your scroll wheel is the throttle. The outline is the 2017 promise.</p>
+        <div class="legend" aria-label="Legend">
+          <span class="key key-new"><i></i><b>2026 Roadster</b> 0–60 in 0.81 s</span>
+          <span class="key key-old"><i></i>2017 promise · 0–60 in 1.9 s</span>
+        </div>
       </div>
       <div class="launch-readouts">
         <div class="readout">
@@ -156,23 +159,40 @@
           <span class="mono-unit">sec</span>
         </div>
         <div class="readout readout-speed">
-          <span class="mono-label">Speed · 2026</span>
+          <span class="mono-label">2026 · Speed</span>
           <span class="readout-num" data-run-mph>0</span>
           <span class="mono-unit">mph</span>
-          <span class="readout-ghost mono-label">2017 promise <b data-ghost-mph>0</b> mph</span>
+          <div class="readout-ghost">
+            <span class="mono-label">2017 promise</span>
+            <svg class="dot-text dot-3" aria-hidden="true"><text x="100%" y=".82em" text-anchor="end" data-ghost-mph>0</text></svg>
+            <span class="mono-unit">mph</span>
+          </div>
         </div>
       </div>
       <div class="launch-track">
-        <div class="lane lane-ghost"><div class="launch-car launch-ghost" data-car data-car-ghost></div></div>
-        <div class="lane"><div class="launch-car" data-car data-car-launch></div></div>
+        <div class="lane lane-ghost">
+          <div class="launch-car launch-ghost" data-car data-car-ghost><span class="car-tag tag-old">2017 promise</span></div>
+        </div>
+        <div class="lane">
+          <div class="launch-car" data-car data-car-launch><span class="car-tag tag-new">2026 · <b data-lead>+0</b> ft ahead</span></div>
+        </div>
         <div class="track-lines"></div>
       </div>
       <div class="launch-timeline">
         <div class="tl-bar"><span class="tl-fill"></span></div>
         <div class="tl-mark" style="--at:.4263"><b>60 mph · 2026</b><span>0.81 s</span></div>
-        <div class="tl-mark tl-mark-ghost" style="--at:1"><b>60 mph · 2017</b><span>1.9 s</span></div>
+        <div class="tl-mark tl-mark-ghost" style="--at:1"><b>60 mph · 2017 promise</b><span>1.9 s</span></div>
       </div>
       <div class="launch-flash" aria-hidden="true"><span>60</span></div>
+      <div class="launch-verdict">
+        <div class="verdict-row">
+          <span class="verdict-new">0.81<small>s</small></span>
+          <span class="verdict-vs mono-label">vs</span>
+          <svg class="dot-text dot-verdict" aria-hidden="true"><text x="0" y=".82em">1.9s</text></svg>
+          <span class="sr-only">versus 1.9 seconds</span>
+        </div>
+        <p><b>2.3× quicker to 60</b> than the car promised in 2017.</p>
+      </div>
     </div>
   </section>
 

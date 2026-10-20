@@ -143,6 +143,8 @@
     $('[data-run-time]').textContent = '0.81';
     $('[data-run-mph]').textContent = '60';
     $('[data-ghost-mph]').textContent = '26';
+    $('[data-lead]').textContent = '+20';
+    gsap.set('.launch-verdict', { opacity: 1, position: 'relative', left: 0, top: 0, xPercent: 0, yPercent: 0, transform: 'none' });
     $$('.odo').forEach(el => { el.textContent = el.dataset.odo + (el.dataset.suffix || ''); });
     $$('.stunt-steps li').forEach(li => li.classList.add('is-on'));
     gsap.set('.rider', { x: 260, y: 760, scaleX: -1 });
@@ -238,6 +240,8 @@
   const trackLines = $('.track-lines');
   const carEl = $('.launch-car:not(.launch-ghost)'), ghostEl = $('.launch-ghost');
   const flash = $('.launch-flash');
+  const leadEl = $('[data-lead]'), verdict = $('.launch-verdict');
+  gsap.set(verdict, { xPercent: -50, yPercent: -50, x: 0, y: 0 });
   const T_END = 1.9, T60 = .81;
 
   // constant acceleration to 60, then the new car keeps at least 60 while it leaves the frame.
@@ -271,6 +275,12 @@
     const firing = t > .01 && t < T60 + .05;
     gsap.set(launch.plumes.rear, { opacity: firing ? .55 + Math.random() * .45 : 0, scaleX: firing ? .7 + Math.random() * .5 : .2, transformOrigin: '100% 50%' });
     trackLines.style.backgroundPositionX = `${-d * 24}px`;
+    // the 2026 car's lead over the 2017 promise; distances are in mph·s, and 1 mph·s = 1.4667 ft
+    leadEl.textContent = '+' + Math.round((d - dg) * 1.4667);
+    // the verdict lands as the 2017 car finally reaches 60
+    const v = gsap.utils.clamp(0, 1, (t - 1.62) / .25);
+    gsap.set(verdict, { opacity: v, y: (1 - v) * 24 });
+    gsap.set('.launch-readouts', { opacity: 1 - v * .75 });
     launchBoost = mph / 7;
 
     if (t >= T60 && !passed60) {

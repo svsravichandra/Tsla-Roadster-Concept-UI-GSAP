@@ -192,9 +192,48 @@ html:not(.js) .loader { display: none; }
 .launch-ghost .car .body, .launch-ghost .car .glass, .launch-ghost .car .tyre, .launch-ghost .car .rim { fill: none; }
 .launch-ghost .car .ln { stroke-dasharray: 3 4; opacity: .7; }
 .launch-ghost .car .sill, .launch-ghost .car .hub, .launch-ghost .car .car-shadow, .launch-ghost .car .spokes { opacity: .35; }
-.readout-ghost { grid-column: 1 / -1; margin-top: 14px; }
-.readout-ghost b { color: var(--bone); font-weight: 500; font-variant-numeric: tabular-nums; }
-.tl-mark-ghost.is-hit { border-color: var(--bone-dim); }
+.readout-ghost { grid-column: 1 / -1; margin-top: 18px; display: grid; grid-template-columns: auto auto; justify-content: end; align-items: end; column-gap: 10px; }
+.readout-ghost .mono-label { grid-column: 1 / -1; margin-bottom: 4px; }
+
+/* Dotted type: the 2017 promise is drawn as a dotted outline, like the ghost car */
+.dot-text { display: block; height: 1em; overflow: visible; font-size: clamp(36px, 6vw, 96px); }
+.dot-3 { width: 2.3em; }
+.dot-text text {
+  font-family: var(--wide); font-stretch: 125%; font-weight: 800; letter-spacing: -.04em; font-size: 1em;
+  fill: none; stroke: var(--bone); stroke-width: 1.6; stroke-dasharray: .5 4.5; stroke-linecap: round;
+  font-variant-numeric: tabular-nums;
+}
+
+.legend { display: flex; gap: 22px; flex-wrap: wrap; font-size: 13px; color: var(--bone-dim); }
+.key { display: inline-flex; align-items: center; gap: 10px; }
+.key b { color: var(--bone); font-weight: 600; }
+.key i { width: 34px; height: 0; border-top: 3px solid var(--signal); }
+.key-old i { border-top: 2px dotted var(--bone); }
+
+.car-tag {
+  position: absolute; left: 62%; bottom: 72%; white-space: nowrap; padding: 5px 10px; border-radius: 999px;
+  font-family: var(--mono); font-size: 11px; letter-spacing: .08em; text-transform: uppercase; pointer-events: none;
+}
+.tag-new { background: var(--signal); color: var(--bone); }
+.tag-new b { font-weight: 500; font-variant-numeric: tabular-nums; }
+.tag-old { border: 1.5px dotted var(--bone-dim); color: var(--bone-dim); left: 55%; }
+
+.launch-verdict {
+  position: absolute; left: 50%; top: 52%; transform: translate(-50%, -50%); display: grid; justify-items: center; gap: 14px;
+  text-align: center; opacity: 0; pointer-events: none; width: max-content; max-width: calc(100% - 32px);
+}
+.verdict-row { display: flex; align-items: baseline; gap: clamp(12px, 2vw, 28px); }
+.verdict-new { font-stretch: 125%; font-weight: 900; color: var(--signal); font-size: clamp(56px, 10vw, 160px); line-height: .85; letter-spacing: -.045em; }
+.verdict-new small { font-size: .38em; margin-left: .06em; letter-spacing: 0; }
+.dot-verdict { font-size: clamp(40px, 7vw, 112px); width: 2.6em; }
+.launch-verdict p { margin: 0; font-size: clamp(15px, 1.5vw, 20px); color: var(--bone-dim); }
+.launch-verdict p b { color: var(--bone); }
+@media (max-width: 760px) {
+  .legend { gap: 8px 16px; font-size: 12px; }
+  .car-tag { font-size: 9px; padding: 3px 7px; }
+}
+.tl-mark-ghost { border-right-style: dotted; }
+.tl-mark-ghost.is-hit { border-color: var(--bone); }
 .launch-timeline { position: relative; margin-top: 28px; height: 44px; }
 .tl-bar { height: 2px; background: var(--line); position: relative; }
 .tl-fill { position: absolute; inset: 0; background: var(--signal); transform-origin: 0 50%; transform: scaleX(0); }
