@@ -5,6 +5,8 @@
   --bone-dim: #8d8c87;
   --line: rgba(236, 235, 230, .14);
   --signal: #e01b24;
+  --ghost: #a0a2a8;
+  --ghost-dark: #3a3c41;
 
   /* Paint is tweened by the configurator */
   --paint: #c8101c;
@@ -189,18 +191,22 @@ html:not(.js) .loader { display: none; }
 .lane { position: relative; }
 .launch-car { width: min(460px, 52vw); position: relative; will-change: transform; }
 .launch-ghost { width: min(300px, 34vw); }
-.launch-ghost .car .body, .launch-ghost .car .glass, .launch-ghost .car .tyre, .launch-ghost .car .rim { fill: none; }
-.launch-ghost .car .ln { stroke-dasharray: 3 4; opacity: .7; }
-.launch-ghost .car .sill, .launch-ghost .car .hub, .launch-ghost .car .car-shadow, .launch-ghost .car .spokes { opacity: .35; }
+/* the 2017 promise is a ghost: one flat, translucent grey, no paint */
+.launch-ghost .car { opacity: .38; }
+.launch-ghost .car .body { fill: var(--ghost); }
+.launch-ghost .car .glass, .launch-ghost .car .tyre, .launch-ghost .car .rim { fill: var(--ghost-dark); }
+.launch-ghost .car .ln { stroke: var(--ghost); }
+.launch-ghost .car .facet, .launch-ghost .car .sill, .launch-ghost .car .car-shadow { opacity: 0; }
+.launch-ghost .car .hub, .launch-ghost .car .spokes line { fill: var(--ghost); stroke: var(--ghost); }
 .readout-ghost { grid-column: 1 / -1; margin-top: 18px; display: grid; grid-template-columns: auto auto; justify-content: end; align-items: end; column-gap: 10px; }
 .readout-ghost .mono-label { grid-column: 1 / -1; margin-bottom: 4px; }
 
-/* Dotted type: the 2017 promise is drawn as a dotted outline, like the ghost car */
-.dot-text { display: block; height: 1em; overflow: visible; font-size: clamp(36px, 6vw, 96px); }
-.dot-3 { width: 2.3em; }
-.dot-text text {
+/* Ghost type: the 2017 promise is set in translucent grey, like the ghost car */
+.ghost-text { display: block; height: 1em; overflow: visible; font-size: clamp(36px, 6vw, 96px); }
+.ghost-3 { width: 2.3em; }
+.ghost-text text {
   font-family: var(--wide); font-stretch: 125%; font-weight: 800; letter-spacing: -.04em; font-size: 1em;
-  fill: none; stroke: var(--bone); stroke-width: 1.6; stroke-dasharray: .5 4.5; stroke-linecap: round;
+  fill: var(--ghost); fill-opacity: .4; stroke: none;
   font-variant-numeric: tabular-nums;
 }
 
@@ -208,7 +214,7 @@ html:not(.js) .loader { display: none; }
 .key { display: inline-flex; align-items: center; gap: 10px; }
 .key b { color: var(--bone); font-weight: 600; }
 .key i { width: 34px; height: 0; border-top: 3px solid var(--signal); }
-.key-old i { border-top: 2px dotted var(--bone); }
+.key-old i { border-top: 3px solid var(--ghost); opacity: .45; }
 
 .car-tag {
   position: absolute; left: 62%; bottom: 72%; white-space: nowrap; padding: 5px 10px; border-radius: 999px;
@@ -216,7 +222,7 @@ html:not(.js) .loader { display: none; }
 }
 .tag-new { background: var(--signal); color: var(--bone); }
 .tag-new b { font-weight: 500; font-variant-numeric: tabular-nums; }
-.tag-old { border: 1.5px dotted var(--bone-dim); color: var(--bone-dim); left: 55%; }
+.tag-old { background: rgba(160, 162, 168, .22); color: var(--bone-dim); left: 55%; }
 
 .launch-verdict {
   position: absolute; left: 50%; top: 52%; transform: translate(-50%, -50%); display: grid; justify-items: center; gap: 14px;
@@ -225,15 +231,14 @@ html:not(.js) .loader { display: none; }
 .verdict-row { display: flex; align-items: baseline; gap: clamp(12px, 2vw, 28px); }
 .verdict-new { font-stretch: 125%; font-weight: 900; color: var(--signal); font-size: clamp(56px, 10vw, 160px); line-height: .85; letter-spacing: -.045em; }
 .verdict-new small { font-size: .38em; margin-left: .06em; letter-spacing: 0; }
-.dot-verdict { font-size: clamp(40px, 7vw, 112px); width: 2.6em; }
+.ghost-verdict { font-size: clamp(40px, 7vw, 112px); width: 2.6em; }
 .launch-verdict p { margin: 0; font-size: clamp(15px, 1.5vw, 20px); color: var(--bone-dim); }
 .launch-verdict p b { color: var(--bone); }
 @media (max-width: 760px) {
   .legend { gap: 8px 16px; font-size: 12px; }
   .car-tag { font-size: 9px; padding: 3px 7px; }
 }
-.tl-mark-ghost { border-right-style: dotted; }
-.tl-mark-ghost.is-hit { border-color: var(--bone); }
+.tl-mark-ghost.is-hit { border-color: var(--ghost); }
 .launch-timeline { position: relative; margin-top: 28px; height: 44px; }
 .tl-bar { height: 2px; background: var(--line); position: relative; }
 .tl-fill { position: absolute; inset: 0; background: var(--signal); transform-origin: 0 50%; transform: scaleX(0); }
