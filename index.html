@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Roadster — 1.9 Seconds</title>
-  <meta name="description" content="An independent, interactive design concept for the Tesla Roadster, built with GSAP.">
+  <title>Roadster — Roads Optional</title>
+  <meta name="description" content="An independent, interactive design concept for the 2026 Tesla Roadster reveal: cold-gas thrusters, fan suction, and a car that lets go of the ceiling.">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 fill=%27%230b0b0c%27/%3E%3Cpath d=%27M6 22h20%27 stroke=%27%23e01b24%27 stroke-width=%273%27/%3E%3C/svg%3E">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -14,7 +14,7 @@
 </head>
 <body>
 
-<!-- Shared paint + glass gradients. Colors are driven by CSS custom properties so the configurator can tween them. -->
+<!-- Shared gradients. Paint colors come from CSS custom properties so the configurator can tween them. -->
 <svg class="defs" aria-hidden="true" width="0" height="0">
   <defs>
     <linearGradient id="paint" x1="0" y1="0" x2="0" y2="1">
@@ -32,39 +32,60 @@
       <stop offset=".6" stop-color="#2b2d31"/>
       <stop offset="1" stop-color="#0c0d0f"/>
     </radialGradient>
+    <!-- cold gas: expanding air chills and fogs, so plumes read as white vapour, not flame -->
+    <radialGradient id="vapour">
+      <stop offset="0" stop-color="#f4f6f8" stop-opacity=".95"/>
+      <stop offset=".45" stop-color="#cfd8df" stop-opacity=".45"/>
+      <stop offset="1" stop-color="#cfd8df" stop-opacity="0"/>
+    </radialGradient>
   </defs>
 </svg>
 
-<!-- Side profile, cloned into every [data-car] slot -->
+<!-- Side profile, cloned into every [data-car] slot. Local origin: wheel contact patch centre is (610, 392). -->
 <template id="car-tpl">
   <svg class="car" viewBox="0 0 1200 420" aria-hidden="true">
-    <ellipse class="car-shadow" cx="610" cy="392" rx="520" ry="10"/>
-    <g class="car-body">
-      <path class="ln body" d="M118 300 C108 282 112 262 138 254 C170 246 205 236 236 226 C270 214 330 206 382 210 C420 213 450 210 478 200 C530 170 572 154 630 152 C700 150 760 162 818 186 C856 200 884 198 924 198 C990 198 1050 206 1082 218 C1100 234 1102 280 1090 304 L1000 310 A 92 92 0 0 0 816 310 C700 316 500 316 394 310 A 92 92 0 0 0 210 310 C170 310 135 310 118 300 Z"/>
-      <path class="ln glass" d="M500 204 C546 178 584 166 632 164 C690 163 740 174 792 194 C740 202 690 205 640 206 C592 207 546 207 500 204 Z"/>
-      <path class="roof" d="M548 168 C600 150 680 148 760 172 L752 180 C680 160 604 160 556 176 Z"/>
-      <path class="sill" d="M420 306 C560 312 700 312 800 306 L796 296 C700 302 560 302 424 296 Z"/>
-      <path class="ln detail" d="M150 266 C330 250 640 240 1086 236"/>
-      <path class="ln detail" d="M690 294 C740 266 800 254 860 256"/>
-      <path class="ln detail" d="M560 212 L548 300"/>
-      <path class="ln headlight" d="M134 262 C160 252 196 244 230 240"/>
-      <path class="ln taillight" d="M1060 222 L1094 232"/>
-    </g>
-    <g class="wheel wheel-f">
-      <circle class="ln tyre" cx="302" cy="318" r="74"/>
-      <circle class="ln rim" cx="302" cy="318" r="54"/>
-      <g class="spokes">
-        <line x1="302" y1="318" x2="302" y2="268"/><line x1="302" y1="318" x2="349.5" y2="302.5"/><line x1="302" y1="318" x2="331.4" y2="358.5"/><line x1="302" y1="318" x2="272.6" y2="358.5"/><line x1="302" y1="318" x2="254.5" y2="302.5"/>
+    <g class="car-art">
+      <ellipse class="car-shadow" cx="610" cy="392" rx="520" ry="10"/>
+      <g class="plumes">
+        <ellipse class="plume plume-rear" cx="1190" cy="262" rx="110" ry="26"/>
+        <ellipse class="plume plume-rear" cx="1170" cy="290" rx="80" ry="18"/>
+        <ellipse class="plume plume-down" cx="200" cy="400" rx="34" ry="80"/>
+        <ellipse class="plume plume-down" cx="610" cy="400" rx="40" ry="90"/>
+        <ellipse class="plume plume-down" cx="1030" cy="400" rx="34" ry="80"/>
+        <ellipse class="plume plume-front" cx="70" cy="280" rx="80" ry="20"/>
       </g>
-      <circle class="hub" cx="302" cy="318" r="10"/>
-    </g>
-    <g class="wheel wheel-r">
-      <circle class="ln tyre" cx="908" cy="318" r="74"/>
-      <circle class="ln rim" cx="908" cy="318" r="54"/>
-      <g class="spokes">
-        <line x1="908" y1="318" x2="908" y2="268"/><line x1="908" y1="318" x2="955.5" y2="302.5"/><line x1="908" y1="318" x2="937.4" y2="358.5"/><line x1="908" y1="318" x2="878.6" y2="358.5"/><line x1="908" y1="318" x2="860.5" y2="302.5"/>
+      <g class="suction">
+        <path d="M560 330 l20 18 l20 -18"/><path d="M560 354 l20 18 l20 -18"/>
+        <path d="M640 330 l20 18 l20 -18"/><path d="M640 354 l20 18 l20 -18"/>
       </g>
-      <circle class="hub" cx="908" cy="318" r="10"/>
+      <g class="car-body">
+        <path class="ln body" d="M118 300 C108 282 112 262 138 254 C170 246 205 236 236 226 C270 214 330 206 382 210 C420 213 450 210 478 200 C530 170 572 154 630 152 C700 150 760 162 818 186 C856 200 884 198 924 198 C990 198 1050 206 1082 218 C1100 234 1102 280 1090 304 L1000 310 A 92 92 0 0 0 816 310 C700 316 500 316 394 310 A 92 92 0 0 0 210 310 C170 310 135 310 118 300 Z"/>
+        <path class="ln glass" d="M500 204 C546 178 584 166 632 164 C690 163 740 174 792 194 C740 202 690 205 640 206 C592 207 546 207 500 204 Z"/>
+        <path class="sill" d="M420 306 C560 312 700 312 800 306 L796 296 C700 302 560 302 424 296 Z"/>
+        <path class="ln detail" d="M150 266 C330 250 640 240 1086 236"/>
+        <path class="ln detail" d="M690 294 C740 266 800 254 860 256"/>
+        <path class="ln detail" d="M560 212 L548 300"/>
+        <path class="ln headlight" d="M134 262 C160 252 196 244 230 240"/>
+        <path class="ln taillight" d="M1060 222 L1094 232"/>
+        <g class="nozzles nozzles-rear"><circle cx="1094" cy="262" r="7"/><circle cx="1090" cy="290" r="7"/></g>
+        <g class="nozzles nozzles-all"><circle cx="200" cy="309" r="6"/><circle cx="610" cy="313" r="6"/><circle cx="1030" cy="307" r="6"/><circle cx="122" cy="282" r="6"/></g>
+      </g>
+      <g class="wheel wheel-f">
+        <circle class="ln tyre" cx="302" cy="318" r="74"/>
+        <circle class="ln rim" cx="302" cy="318" r="54"/>
+        <g class="spokes">
+          <line x1="302" y1="318" x2="302" y2="268"/><line x1="302" y1="318" x2="349.5" y2="302.5"/><line x1="302" y1="318" x2="331.4" y2="358.5"/><line x1="302" y1="318" x2="272.6" y2="358.5"/><line x1="302" y1="318" x2="254.5" y2="302.5"/>
+        </g>
+        <circle class="hub" cx="302" cy="318" r="10"/>
+      </g>
+      <g class="wheel wheel-r">
+        <circle class="ln tyre" cx="908" cy="318" r="74"/>
+        <circle class="ln rim" cx="908" cy="318" r="54"/>
+        <g class="spokes">
+          <line x1="908" y1="318" x2="908" y2="268"/><line x1="908" y1="318" x2="955.5" y2="302.5"/><line x1="908" y1="318" x2="937.4" y2="358.5"/><line x1="908" y1="318" x2="878.6" y2="358.5"/><line x1="908" y1="318" x2="860.5" y2="302.5"/>
+        </g>
+        <circle class="hub" cx="908" cy="318" r="10"/>
+      </g>
     </g>
   </svg>
 </template>
@@ -73,21 +94,22 @@
 <div class="grain" aria-hidden="true"></div>
 <div class="cursor" aria-hidden="true"><span class="cursor-dot"></span><span class="cursor-ring"></span></div>
 
-<!-- Intro: a literal 1.9-second countdown -->
+<!-- Intro: the reveal's 0–60 run, counted in real time -->
 <div class="loader" aria-hidden="true">
   <div class="loader-row">
     <div class="loader-cell"><span class="mono-label">Elapsed</span><span class="loader-num" data-loader-time>0.00</span><span class="mono-unit">s</span></div>
     <div class="loader-cell"><span class="mono-label">Velocity</span><span class="loader-num" data-loader-mph>00</span><span class="mono-unit">mph</span></div>
   </div>
   <div class="loader-bar"><span></span></div>
-  <p class="loader-after">That was <em>1.9 seconds.</em></p>
+  <p class="loader-after">That was <em>0.81 seconds.</em> The 0–60 run shown at the reveal.</p>
   <button class="loader-skip mono-label" type="button">Skip</button>
 </div>
 
 <header class="nav">
-  <a class="nav-mark" href="#top" aria-label="Back to top">ROADSTER<sup>®</sup></a>
+  <a class="nav-mark" href="#top" aria-label="Back to top">ROADSTER <sup>Concept</sup></a>
   <nav class="nav-links" aria-label="Sections">
     <a href="#launch">Launch</a>
+    <a href="#stunt">The stunt</a>
     <a href="#numbers">Numbers</a>
     <a href="#anatomy">Anatomy</a>
     <a href="#configure">Configure</a>
@@ -102,30 +124,30 @@
   <!-- HERO -->
   <section class="hero">
     <div class="hero-meta mono-label">
-      <span>Electric · All-wheel drive · 2+2</span>
-      <span>Unveiled Nov 16, 2017</span>
+      <span>Electric · Cold-gas thrusters · Fan suction</span>
+      <span>Revealed Oct 15, 2026 · McGregor, Texas</span>
     </div>
     <h1 class="hero-title" aria-label="Roadster">
       <span class="hero-word">ROADSTER</span>
     </h1>
     <div class="hero-car" data-car data-car-hero></div>
     <div class="hero-foot">
-      <p class="hero-lede">The quickest car in the world.<br>With room for your friends and a roof you can leave at home.</p>
+      <p class="hero-lede">Compressed-air thrusters from SpaceX that push harder than the tires can grip. A fan underneath that holds it to the ceiling.</p>
       <ul class="hero-stats">
-        <li><b>1.9</b><span>s · 0–60 mph</span></li>
-        <li><b>250+</b><span>mph · top speed</span></li>
-        <li><b>620</b><span>mi · range</span></li>
+        <li><b>&lt;1</b><span>s · 0–60 mph</span></li>
+        <li><b>230+</b><span>mph · top speed</span></li>
+        <li><b>300</b><span>mi · range</span></li>
       </ul>
       <a class="hero-scroll mono-label" href="#launch"><i></i>Scroll to launch</a>
     </div>
   </section>
 
-  <!-- LAUNCH: scroll-scrubbed acceleration run -->
+  <!-- LAUNCH: scroll-scrubbed race against the 2017 promise -->
   <section class="launch" id="launch">
     <div class="launch-stage">
       <div class="launch-head">
         <span class="mono-label">01 — Launch control</span>
-        <p class="launch-hint">Your scroll wheel is the throttle.</p>
+        <p class="launch-hint">Your scroll wheel is the throttle. The outline is the 2017 promise.</p>
       </div>
       <div class="launch-readouts">
         <div class="readout">
@@ -134,52 +156,82 @@
           <span class="mono-unit">sec</span>
         </div>
         <div class="readout readout-speed">
-          <span class="mono-label">Speed</span>
+          <span class="mono-label">Speed · 2026</span>
           <span class="readout-num" data-run-mph>0</span>
           <span class="mono-unit">mph</span>
+          <span class="readout-ghost mono-label">2017 promise <b data-ghost-mph>0</b> mph</span>
         </div>
       </div>
       <div class="launch-track">
+        <div class="lane lane-ghost"><div class="launch-car launch-ghost" data-car data-car-ghost></div></div>
+        <div class="lane"><div class="launch-car" data-car data-car-launch></div></div>
         <div class="track-lines"></div>
-        <div class="launch-car" data-car data-car-launch></div>
       </div>
       <div class="launch-timeline">
         <div class="tl-bar"><span class="tl-fill"></span></div>
-        <div class="tl-mark" style="--at:.4524"><b>60 mph</b><span>1.9 s</span></div>
-        <div class="tl-mark" style="--at:1"><b>100 mph</b><span>4.2 s</span></div>
+        <div class="tl-mark" style="--at:.4263"><b>60 mph · 2026</b><span>0.81 s</span></div>
+        <div class="tl-mark tl-mark-ghost" style="--at:1"><b>60 mph · 2017</b><span>1.9 s</span></div>
       </div>
       <div class="launch-flash" aria-hidden="true"><span>60</span></div>
     </div>
   </section>
 
-  <!-- STATEMENT -->
-  <section class="statement">
-    <span class="mono-label">02 — Origin</span>
-    <p class="statement-text" data-scrub-words>November 2017. A semi-truck trailer opens on stage, and something nobody expected rolls out of the back. A four-seat convertible quicker off the line than any production car ever made. Then the numbers started.</p>
+  <!-- STUNT: the reveal sequence, scroll-scrubbed -->
+  <section class="stunt" id="stunt">
+    <div class="stunt-stage">
+      <header class="stunt-head">
+        <span class="mono-label">02 — The reveal</span>
+        <h2 class="stunt-title">Up the wall. Across the ceiling. Then it lets go.</h2>
+      </header>
+      <ol class="stunt-steps">
+        <li><b>Climb</b><span>A fan under the floor sucks the car onto the ramp.</span></li>
+        <li><b>Inverted</b><span>Suction alone holds it upside down.</span></li>
+        <li><b>Release</b><span>It runs out of ramp and drops.</span></li>
+        <li><b>Roll</b><span>A full roll around its own length, mid-air.</span></li>
+        <li><b>Land</b><span>Cold-gas thrusters fire to soften the touchdown.</span></li>
+      </ol>
+      <svg class="stunt-svg" viewBox="0 0 1600 900" aria-hidden="true">
+        <path class="ramp-body" d="M700 760 A300 300 0 0 0 1000 460 A300 300 0 0 0 700 160 L380 160 L380 120 L700 120 A340 340 0 0 1 1040 460 A340 340 0 0 1 700 800 L700 760 Z"/>
+        <path class="ramp-face" d="M640 760 L700 760 A300 300 0 0 0 1000 460 A300 300 0 0 0 700 160 L380 160"/>
+        <g class="ramp-ribs"></g>
+        <path class="ground" d="M-100 760 H1700"/>
+        <path id="ride" class="ride" d="M120 760 L700 760 A300 300 0 0 0 1000 460 A300 300 0 0 0 700 160 L380 160"/>
+        <path class="arc-trace" d="M380 160 Q300 330 260 760"/>
+        <g class="rider"><g class="rider-art car" transform="scale(.3) translate(-610 -392)"></g></g>
+        <text class="stunt-note" x="1080" y="300">ramp</text>
+        <text class="stunt-note" x="120" y="800">uncrewed demo run</text>
+      </svg>
+    </div>
   </section>
 
-  <!-- NUMBERS: odometer counters -->
+  <!-- STATEMENT -->
+  <section class="statement">
+    <span class="mono-label">03 — Nine years later</span>
+    <p class="statement-text" data-scrub-words>November 2017, the Roadster rolled out of a semi trailer with a promise of 1.9 seconds. October 2026, at a SpaceX test site in Texas, it climbed a ramp until it hung from the ceiling, let go, rolled, and landed on a breath of compressed air.</p>
+  </section>
+
+  <!-- NUMBERS -->
   <section class="numbers" id="numbers">
     <header class="section-head">
-      <span class="mono-label">03 — By the numbers</span>
-      <h2 class="section-title" data-split>Every figure,<br>a new ceiling.</h2>
+      <span class="mono-label">04 — By the numbers</span>
+      <h2 class="section-title" data-split>Fewer seats.<br>More air.</h2>
     </header>
     <div class="num-grid">
       <article class="num">
-        <div class="odo" data-odo="620"></div>
-        <p><b>miles</b> of range on a single charge, from a 200 kWh pack.</p>
+        <div class="odo" data-odo="10"></div>
+        <p><b>cold-gas thrusters</b> on the demo car, according to Tesla engineering VP Lars Moravy.</p>
       </article>
       <article class="num">
-        <div class="odo" data-odo="250" data-suffix="+"></div>
-        <p><b>mph</b> top speed. The figure was a floor, not a limit.</p>
+        <div class="odo" data-odo="600"></div>
+        <p><b>litres</b> of rechargeable compressed air feed them. Nothing burns.</p>
       </article>
       <article class="num">
-        <div class="odo" data-odo="8.8"></div>
-        <p><b>seconds</b> to cover the quarter mile from a standstill.</p>
+        <div class="odo" data-odo="230" data-suffix="+"></div>
+        <p><b>mph</b> top speed, quoted for all three trims.</p>
       </article>
       <article class="num">
-        <div class="odo" data-odo="10,000"></div>
-        <p><b>Nm</b> of wheel torque, split across three motors.</p>
+        <div class="odo" data-odo="300"></div>
+        <p><b>miles</b> of range. The 2017 car promised 620; flight-ready hardware takes up room.</p>
       </article>
     </div>
   </section>
@@ -188,57 +240,71 @@
   <section class="anatomy" id="anatomy">
     <div class="anatomy-track">
       <div class="panel panel-intro">
-        <span class="mono-label">04 — Anatomy</span>
-        <h2 class="section-title">Three ideas<br>under one<br>body.</h2>
+        <span class="mono-label">05 — Anatomy</span>
+        <h2 class="section-title">Two systems<br>no other car<br>ships with.</h2>
         <p class="panel-hint mono-label">Keep scrolling →</p>
       </div>
 
-      <div class="panel panel-motors">
+      <div class="panel panel-thrust">
         <div class="panel-copy">
           <span class="panel-num">i.</span>
-          <h3>Three motors.</h3>
-          <p>One up front, two at the rear. Each rear wheel gets its own, so torque goes exactly where grip is, not where a differential guesses.</p>
+          <h3>Cold-gas thrusters.</h3>
+          <p>Ten nozzles around the body vent compressed air. No combustion, no flame: the expanding air chills and fogs. Tesla says they push four to five times harder than the tires can grip.</p>
         </div>
         <svg class="plan" viewBox="0 0 1000 420" aria-hidden="true">
           <path class="plan-body" d="M70 210 C70 150 100 112 180 100 C260 88 330 84 420 86 L700 86 C790 86 860 70 930 92 C975 108 992 160 992 210 C992 260 975 312 930 328 C860 350 790 334 700 334 L420 334 C330 336 260 332 180 320 C100 308 70 270 70 210 Z"/>
           <rect class="plan-cabin" x="420" y="118" width="330" height="184" rx="60"/>
-          <rect class="plan-wheel" x="215" y="58" width="100" height="30" rx="8"/>
-          <rect class="plan-wheel" x="215" y="332" width="100" height="30" rx="8"/>
-          <rect class="plan-wheel" x="735" y="54" width="100" height="34" rx="8"/>
-          <rect class="plan-wheel" x="735" y="332" width="100" height="34" rx="8"/>
-          <path class="plan-flow" d="M265 210 L265 92"/>
-          <path class="plan-flow" d="M265 210 L265 328"/>
-          <path class="plan-flow" d="M785 160 L785 92"/>
-          <path class="plan-flow" d="M785 260 L785 328"/>
-          <g class="motor"><circle cx="265" cy="210" r="34"/><text x="265" y="215">F</text></g>
-          <g class="motor"><circle cx="785" cy="160" r="30"/><text x="785" y="165">RL</text></g>
-          <g class="motor"><circle cx="785" cy="260" r="30"/><text x="785" y="265">RR</text></g>
+          <circle class="plan-tank" cx="585" cy="210" r="56"/>
+          <text class="plan-label" x="585" y="215">600 L</text>
+          <g class="jets"></g>
         </svg>
       </div>
 
-      <div class="panel panel-roof">
+      <div class="panel panel-suction">
         <div class="panel-copy">
           <span class="panel-num">ii.</span>
-          <h3>A roof that leaves.</h3>
-          <p>The glass roof lifts off and stows in the trunk. Coupe on the way there, open sky on the way back.</p>
+          <h3>A fan that holds on.</h3>
+          <p>A fan in the floor pulls air out from under the car, so the atmosphere presses it onto whatever surface it's touching. Downforce at a standstill, and enough grip to drive upside down.</p>
         </div>
-        <div class="roof-stage" data-car data-car-roof></div>
+        <div class="suction-stage">
+          <svg class="suction-ceiling" viewBox="0 0 1200 120" aria-hidden="true"><path d="M0 100 H1200"/><g class="hatch"></g></svg>
+          <div class="suction-car" data-car data-car-suction></div>
+        </div>
       </div>
 
       <div class="panel panel-seats">
         <div class="panel-copy">
           <span class="panel-num">iii.</span>
-          <h3>Four seats. Seriously.</h3>
-          <p>A 2+2 layout in a car built to embarrass hypercars. Bring three people who will never believe you otherwise.</p>
+          <h3>Three trims. One seat to fly.</h3>
+          <p>Performance and Thrust carry two people. Rocket, the flight-ready one, carries just the driver, and it isn't approved for public roads.</p>
         </div>
-        <svg class="plan" viewBox="0 0 1000 420" aria-hidden="true">
-          <path class="plan-body" d="M70 210 C70 150 100 112 180 100 C260 88 330 84 420 86 L700 86 C790 86 860 70 930 92 C975 108 992 160 992 210 C992 260 975 312 930 328 C860 350 790 334 700 334 L420 334 C330 336 260 332 180 320 C100 308 70 270 70 210 Z"/>
-          <rect class="plan-cabin" x="420" y="118" width="330" height="184" rx="60"/>
-          <g class="seat"><rect x="470" y="140" width="96" height="62" rx="18"/><rect x="566" y="146" width="18" height="50" rx="6"/></g>
-          <g class="seat"><rect x="470" y="218" width="96" height="62" rx="18"/><rect x="566" y="224" width="18" height="50" rx="6"/></g>
-          <g class="seat"><rect x="618" y="146" width="80" height="52" rx="16"/><rect x="698" y="150" width="16" height="44" rx="6"/></g>
-          <g class="seat"><rect x="618" y="222" width="80" height="52" rx="16"/><rect x="698" y="226" width="16" height="44" rx="6"/></g>
-        </svg>
+        <div class="trim-plans">
+          <figure>
+            <svg class="plan plan-sm" viewBox="0 0 1000 420" aria-hidden="true">
+              <path class="plan-body" d="M70 210 C70 150 100 112 180 100 C260 88 330 84 420 86 L700 86 C790 86 860 70 930 92 C975 108 992 160 992 210 C992 260 975 312 930 328 C860 350 790 334 700 334 L420 334 C330 336 260 332 180 320 C100 308 70 270 70 210 Z"/>
+              <g class="seat"><rect x="480" y="128" width="130" height="74" rx="22"/></g>
+              <g class="seat"><rect x="480" y="218" width="130" height="74" rx="22"/></g>
+            </svg>
+            <figcaption><b>Performance</b><span>2 seats · road</span></figcaption>
+          </figure>
+          <figure>
+            <svg class="plan plan-sm" viewBox="0 0 1000 420" aria-hidden="true">
+              <path class="plan-body" d="M70 210 C70 150 100 112 180 100 C260 88 330 84 420 86 L700 86 C790 86 860 70 930 92 C975 108 992 160 992 210 C992 260 975 312 930 328 C860 350 790 334 700 334 L420 334 C330 336 260 332 180 320 C100 308 70 270 70 210 Z"/>
+              <g class="seat"><rect x="480" y="128" width="130" height="74" rx="22"/></g>
+              <g class="seat"><rect x="480" y="218" width="130" height="74" rx="22"/></g>
+              <circle class="plan-jet" cx="990" cy="170" r="12"/><circle class="plan-jet" cx="990" cy="250" r="12"/>
+            </svg>
+            <figcaption><b>Thrust</b><span>2 seats · rear thrusters · race ready</span></figcaption>
+          </figure>
+          <figure>
+            <svg class="plan plan-sm" viewBox="0 0 1000 420" aria-hidden="true">
+              <path class="plan-body" d="M70 210 C70 150 100 112 180 100 C260 88 330 84 420 86 L700 86 C790 86 860 70 930 92 C975 108 992 160 992 210 C992 260 975 312 930 328 C860 350 790 334 700 334 L420 334 C330 336 260 332 180 320 C100 308 70 270 70 210 Z"/>
+              <g class="seat"><rect x="480" y="173" width="130" height="74" rx="22"/></g>
+              <g class="rocket-jets"></g>
+            </svg>
+            <figcaption><b>Rocket</b><span>1 seat · 10 thrusters · off-road only</span></figcaption>
+          </figure>
+        </div>
       </div>
     </div>
   </section>
@@ -247,7 +313,7 @@
   <section class="config" id="configure">
     <div class="config-glow" aria-hidden="true"></div>
     <header class="config-head">
-      <span class="mono-label">05 — Configure · drag the car to roll it</span>
+      <span class="mono-label">06 — Configure · drag the car to roll it</span>
       <h2 class="config-name" aria-live="polite"><span data-paint-name>Signal Red</span></h2>
     </header>
     <div class="config-car" data-car data-car-config></div>
@@ -259,11 +325,16 @@
         <button class="swatch" role="radio" aria-checked="false" data-paint="#1d3f9a" data-name="Abyss Blue" style="--c:#1d3f9a"><span class="sr-only">Abyss Blue</span></button>
         <button class="swatch" role="radio" aria-checked="false" data-paint="#1a1a1c" data-name="Nightfall" style="--c:#1a1a1c"><span class="sr-only">Nightfall</span></button>
       </div>
-      <div class="edition" role="radiogroup" aria-label="Edition">
-        <button class="edition-btn is-active" role="radio" aria-checked="true" data-price="200000">Base</button>
-        <button class="edition-btn" role="radio" aria-checked="false" data-price="250000">Founders Series</button>
+      <div class="edition" role="radiogroup" aria-label="Trim">
+        <button class="edition-btn is-active" role="radio" aria-checked="true" data-trim="performance" data-price="50000" data-spec="2 seats · road car">Performance</button>
+        <button class="edition-btn" role="radio" aria-checked="false" data-trim="thrust" data-price="250000" data-spec="2 seats · rear thrusters · race ready">Thrust</button>
+        <button class="edition-btn" role="radio" aria-checked="false" data-trim="rocket" data-price="0" data-spec="1 seat · 10 thrusters · not road-approved">Rocket</button>
       </div>
-      <div class="price"><span class="mono-label">Reservation price</span><span class="price-num">$<span data-price-out>200,000</span></span></div>
+      <div class="price">
+        <span class="mono-label">Reservation</span>
+        <span class="price-num" data-price-out>$50,000</span>
+        <span class="price-spec mono-label" data-trim-spec>2 seats · road car</span>
+      </div>
     </div>
   </section>
 
@@ -271,17 +342,17 @@
   <section class="cta" id="reserve">
     <div class="marquee" aria-hidden="true">
       <div class="marquee-inner">
-        <span>Zero to sixty in one point nine</span><i>●</i>
-        <span>Zero to sixty in one point nine</span><i>●</i>
+        <span>Roads optional</span><i>●</i><span>Ceilings optional</span><i>●</i>
+        <span>Roads optional</span><i>●</i><span>Ceilings optional</span><i>●</i>
       </div>
     </div>
     <div class="cta-body">
-      <p class="cta-line">In the time you’ve spent on this page, a Roadster flat out would have covered <b data-cta-distance>0.0 miles</b>.</p>
+      <p class="cta-line">In the time you’ve spent on this page, a Roadster flat out at 230 mph would have covered <b data-cta-distance>0.0 miles</b>.</p>
       <a class="magnet" href="#top"><span>Reserve yours</span></a>
     </div>
     <footer class="foot">
-      <p>Independent design concept. Not affiliated with, sponsored or endorsed by Tesla, Inc. “Roadster” and related marks belong to their owners. Performance figures are manufacturer claims announced at the November 2017 unveiling.</p>
-      <p class="mono-label">Built with GSAP · ScrollTrigger · DrawSVG · SplitText</p>
+      <p>Independent design concept. Not affiliated with, sponsored or endorsed by Tesla, Inc. or SpaceX. “Roadster” and related marks belong to their owners. Figures are as reported from Tesla’s October 15, 2026 reveal; some differ between outlets, and none are final production specs. Production is targeted for 2028.</p>
+      <p class="mono-label">Built with GSAP · ScrollTrigger · MotionPath · DrawSVG · SplitText</p>
     </footer>
   </section>
 
@@ -292,6 +363,7 @@
 <script src="vendor/DrawSVGPlugin.min.js"></script>
 <script src="vendor/SplitText.min.js"></script>
 <script src="vendor/CustomEase.min.js"></script>
+<script src="vendor/MotionPathPlugin.min.js"></script>
 <script src="js/main.js"></script>
 </body>
 </html>

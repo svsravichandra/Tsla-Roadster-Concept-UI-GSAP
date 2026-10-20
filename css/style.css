@@ -74,7 +74,6 @@ main, .nav { position: relative; z-index: 2; }
 .car .ln { stroke: var(--bone); stroke-width: 1.4; vector-effect: non-scaling-stroke; }
 .car .body { fill: url(#paint); }
 .car .glass { fill: url(#glass); stroke-width: 1; }
-.car .roof { fill: rgba(236, 235, 230, .18); }
 .car .sill { fill: #0b0b0c; opacity: .65; }
 .car .detail { fill: none; opacity: .5; stroke-width: 1; }
 .car .headlight { fill: none; stroke-width: 2.5; stroke-linecap: round; }
@@ -84,6 +83,10 @@ main, .nav { position: relative; z-index: 2; }
 .car .spokes line { stroke: var(--bone); stroke-width: 5; opacity: .8; }
 .car .hub { fill: var(--paint); }
 .car .car-shadow { fill: #000; opacity: .85; }
+.car .plume { fill: url(#vapour); opacity: 0; }
+.car .suction path { fill: none; stroke: var(--signal); stroke-width: 5; stroke-linecap: round; stroke-linejoin: round; opacity: 0; }
+.car .nozzles circle { fill: #050506; stroke: var(--bone); stroke-width: 2; opacity: 0; transition: opacity .4s; }
+.trim-thrust .nozzles-rear circle, .trim-rocket .nozzles circle { opacity: 1; }
 
 /* ---------- Loader ---------- */
 .loader {
@@ -165,7 +168,7 @@ html:not(.js) .loader { display: none; }
 }
 .launch-head { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; flex-wrap: wrap; }
 .launch-hint { margin: 0; font-size: 14px; color: var(--bone-dim); }
-.launch-readouts { display: flex; justify-content: space-between; align-items: flex-start; margin-top: 4vh; }
+.launch-readouts { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; margin-top: 3vh; }
 .readout { display: grid; grid-template-columns: auto auto; align-items: end; column-gap: 12px; }
 .readout .mono-label { grid-column: 1 / -1; margin-bottom: 6px; }
 .readout-speed { text-align: right; }
@@ -180,7 +183,16 @@ html:not(.js) .loader { display: none; }
   background-image: linear-gradient(90deg, var(--bone) 0 60px, transparent 60px 160px);
   background-size: 160px 2px; opacity: .25;
 }
-.launch-car { width: min(560px, 62vw); position: relative; will-change: transform; }
+.launch-track { display: grid; gap: 6px; }
+.lane { position: relative; }
+.launch-car { width: min(460px, 52vw); position: relative; will-change: transform; }
+.launch-ghost { width: min(300px, 34vw); }
+.launch-ghost .car .body, .launch-ghost .car .glass, .launch-ghost .car .tyre, .launch-ghost .car .rim { fill: none; }
+.launch-ghost .car .ln { stroke-dasharray: 3 4; opacity: .7; }
+.launch-ghost .car .sill, .launch-ghost .car .hub, .launch-ghost .car .car-shadow, .launch-ghost .car .spokes { opacity: .35; }
+.readout-ghost { grid-column: 1 / -1; margin-top: 14px; }
+.readout-ghost b { color: var(--bone); font-weight: 500; font-variant-numeric: tabular-nums; }
+.tl-mark-ghost.is-hit { border-color: var(--bone-dim); }
 .launch-timeline { position: relative; margin-top: 28px; height: 44px; }
 .tl-bar { height: 2px; background: var(--line); position: relative; }
 .tl-fill { position: absolute; inset: 0; background: var(--signal); transform-origin: 0 50%; transform: scaleX(0); }
@@ -195,6 +207,44 @@ html:not(.js) .loader { display: none; }
 .launch-flash {
   position: absolute; inset: 0; display: grid; place-items: center; pointer-events: none;
   font-stretch: 125%; font-weight: 900; font-size: 60vw; line-height: 1; color: var(--signal); opacity: 0; mix-blend-mode: screen;
+}
+
+/* ---------- Stunt ---------- */
+.stunt { position: relative; border-top: 1px solid var(--line); }
+.stunt-stage {
+  position: relative; height: 100vh; height: 100svh; overflow: hidden; padding: 84px var(--gutter) 32px;
+  display: grid; grid-template-columns: minmax(240px, 340px) minmax(0, 1fr); grid-template-rows: auto 1fr; gap: 12px 4vw;
+}
+.stunt-head { grid-column: 1 / -1; display: grid; gap: 14px; }
+.stunt-title { margin: 0; font-stretch: 125%; font-weight: 800; font-size: clamp(28px, 4.2vw, 64px); line-height: .95; letter-spacing: -.035em; max-width: 18ch; text-wrap: balance; }
+.stunt-steps { list-style: none; margin: 0; padding: 0; display: grid; gap: 4px; align-content: center; counter-reset: step; }
+.stunt-steps li {
+  display: grid; grid-template-columns: 34px 1fr; column-gap: 12px; padding: 12px 0; border-top: 1px solid var(--line);
+  opacity: .32; transition: opacity .35s;
+}
+.stunt-steps li::before {
+  counter-increment: step; content: counter(step, decimal-leading-zero); grid-row: span 2;
+  font-family: var(--mono); font-size: 12px; color: var(--bone-dim); padding-top: 3px;
+}
+.stunt-steps li b { font-stretch: 125%; font-size: 18px; letter-spacing: -.01em; }
+.stunt-steps li span { color: var(--bone-dim); font-size: 14px; line-height: 1.4; }
+.stunt-steps li.is-on { opacity: 1; }
+.stunt-steps li.is-on::before { color: var(--signal); }
+.stunt-svg { width: 100%; height: 100%; min-height: 0; overflow: visible; align-self: center; }
+.ramp-body { fill: var(--ink-2); stroke: var(--line); stroke-width: 1; }
+.ramp-face { fill: none; stroke: var(--bone); stroke-width: 2.5; }
+.ramp-ribs line { stroke: var(--bone-dim); stroke-width: 1; opacity: .35; }
+.ground { stroke: var(--bone-dim); stroke-width: 1.5; stroke-dasharray: 2 8; }
+.ride { fill: none; stroke: var(--signal); stroke-width: 2; opacity: .6; }
+.arc-trace { fill: none; stroke: var(--bone-dim); stroke-width: 1.5; stroke-dasharray: 4 10; }
+.stunt-note { fill: var(--bone-dim); font-family: var(--mono); font-size: 16px; letter-spacing: .14em; text-transform: uppercase; }
+@media (max-width: 900px) {
+  .stunt-stage { grid-template-columns: 1fr; grid-template-rows: auto auto 1fr; }
+  .stunt-steps { grid-template-columns: repeat(5, 1fr); gap: 6px; }
+  .stunt-steps li { grid-template-columns: 1fr; padding: 8px 0; }
+  .stunt-steps li::before { grid-row: auto; }
+  .stunt-steps li b { font-size: 13px; }
+  .stunt-steps li span { display: none; }
 }
 
 /* ---------- Statement ---------- */
@@ -250,12 +300,25 @@ html:not(.js) .loader { display: none; }
 .plan-cabin { fill: rgba(236, 235, 230, .04); stroke: var(--line); stroke-width: 1; }
 .plan-wheel { fill: var(--ink-2); stroke: var(--bone-dim); stroke-width: 1; }
 .plan-flow { stroke: var(--signal); stroke-width: 3; stroke-dasharray: 6 10; fill: none; }
-.motor circle { fill: var(--ink); stroke: var(--signal); stroke-width: 2; }
-.motor text { fill: var(--bone); font-family: var(--mono); font-size: 16px; text-anchor: middle; }
+.plan-tank { fill: rgba(236, 235, 230, .05); stroke: var(--bone-dim); stroke-width: 1; stroke-dasharray: 4 5; }
+.plan-label { fill: var(--bone); font-family: var(--mono); font-size: 22px; text-anchor: middle; }
+.jets circle, .plan-jet, .rocket-jets circle { fill: var(--ink); stroke: var(--signal); stroke-width: 2.5; }
+.jets ellipse { fill: url(#vapour); opacity: 0; }
+.jets line { stroke: var(--signal); stroke-width: 1; stroke-dasharray: 3 6; opacity: .45; }
+.suction-stage { position: relative; display: grid; gap: 0; align-content: center; }
+.suction-ceiling { width: 100%; height: auto; overflow: visible; }
+.suction-ceiling path { stroke: var(--bone); stroke-width: 2; fill: none; }
+.suction-ceiling .hatch line { stroke: var(--bone-dim); stroke-width: 1; opacity: .5; }
+.suction-car { width: 92%; transform: scaleY(-1); margin-top: -3.4%; }
+.suction-car .car .suction path { opacity: 1; }
+.trim-plans { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 3vw; align-items: end; }
+.trim-plans figure { margin: 0; display: grid; gap: 14px; }
+.trim-plans figcaption { display: grid; gap: 4px; }
+.trim-plans figcaption b { font-stretch: 125%; font-size: 20px; }
+.trim-plans figcaption span { font-family: var(--mono); font-size: 11px; color: var(--bone-dim); text-transform: uppercase; letter-spacing: .1em; }
+.plan-sm { max-height: 30vh; }
+@media (max-width: 900px) { .trim-plans { grid-template-columns: 1fr; gap: 18px; } .plan-sm { max-height: 14vh; } }
 .seat rect { fill: rgba(224, 27, 36, .14); stroke: var(--signal); stroke-width: 1.5; }
-.roof-stage { width: 100%; }
-.roof-stage .roof-ghost { fill: none; stroke: var(--bone); stroke-dasharray: 4 5; opacity: .6; vector-effect: non-scaling-stroke; }
-.roof-stage .roof { fill: rgba(236, 235, 230, .28); stroke: var(--bone); stroke-width: 1; vector-effect: non-scaling-stroke; }
 @media (max-width: 900px) {
   .panel { grid-template-columns: 1fr; align-content: center; gap: 32px; width: 100vw; }
   .panel-intro { width: 100vw; }
@@ -293,6 +356,7 @@ html:not(.js) .loader { display: none; }
 .edition-btn { padding: 10px 18px; border-radius: 999px; font-size: 13px; color: var(--bone-dim); transition: color .3s, background .3s; }
 .edition-btn.is-active { background: var(--bone); color: var(--ink); }
 .price { display: grid; gap: 6px; text-align: right; }
+.price-spec { color: var(--bone); }
 .price-num { font-stretch: 125%; font-weight: 800; font-size: clamp(28px, 3.4vw, 48px); letter-spacing: -.03em; font-variant-numeric: tabular-nums; }
 @media (max-width: 760px) { .price { text-align: left; } }
 
