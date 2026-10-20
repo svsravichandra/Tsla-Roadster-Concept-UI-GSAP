@@ -1,6 +1,6 @@
 /* Roadster — interactive concept
  * GSAP 3.13 · ScrollTrigger · MotionPath · DrawSVG · SplitText · CustomEase
- * v2: the October 15, 2026 reveal — cold-gas thrusters and fan suction
+ * v2: the October 15, 2026 reveal — cold-gas thrusters and a vacuum underbody
  */
 (async () => {
   gsap.registerPlugin(ScrollTrigger, DrawSVGPlugin, SplitText, CustomEase, MotionPathPlugin);
@@ -314,7 +314,7 @@
     .to(rider, { motionPath: { path: '#ride', autoRotate: true }, duration: 6 }, 0)
     .to(stunt.spokes, { rotation: 1800, svgOrigin: hub, duration: 6 }, 0)
     .fromTo('.ride', { drawSVG: '0% 100%' }, { drawSVG: '100% 100%', duration: 6 }, 0)
-    // fan suction shows from the bottom of the ramp until release
+    // vacuum suction shows from the bottom of the ramp until release
     .to(stunt.suction, { opacity: 1, duration: .3, stagger: .05 }, 1.8)
     .to(stunt.suction, { y: 8, duration: .25, repeat: 13, yoyo: true, stagger: .06 }, 2.1)
     .to(stunt.suction, { opacity: 0, duration: .2 }, 6.05)
