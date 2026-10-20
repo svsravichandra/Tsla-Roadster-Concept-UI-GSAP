@@ -244,10 +244,10 @@
   gsap.set(verdict, { xPercent: -50, yPercent: -50, x: 0, y: 0 });
   const T_END = 1.9, T60 = .81;
 
-  // constant acceleration to 60, then the new car keeps at least 60 while it leaves the frame.
-  // Speeds above 60 were not published, so the readout holds at 60.
-  const mphNew = t => Math.min(60, 60 * t / T60);
-  const distNew = t => (t <= T60 ? 30 * t * t / T60 : 30 * T60 + 60 * (t - T60));
+  // constant acceleration through 60 mph at 0.81 s. Past 60 the speed keeps climbing at the same
+  // rate as an illustration; Tesla hasn't published figures beyond 0–60.
+  const mphNew = t => 60 * t / T60;
+  const distNew = t => 30 * t * t / T60;
   const mphOld = t => 60 * t / 1.9;
   const distOld = t => 30 * t * t / 1.9;
   const D_REF = distOld(T_END); // the ghost ends near the right edge
@@ -257,7 +257,8 @@
   function renderRun() {
     const t = run.t;
     const mph = mphNew(t), d = distNew(t), dg = distOld(t);
-    runTime.textContent = t.toFixed(2);
+    // the clock answers "how long to 60?", so it stops at 0.81 while the speed keeps climbing
+    runTime.textContent = Math.min(t, T60).toFixed(2);
     runMph.textContent = Math.round(mph);
     ghostMph.textContent = Math.round(mphOld(t));
     tlFill.style.transform = `scaleX(${t / T_END})`;
@@ -285,7 +286,7 @@
 
     if (t >= T60 && !passed60) {
       passed60 = true;
-      gsap.fromTo(flash, { opacity: .55, scale: .8 }, { opacity: 0, scale: 1.25, duration: .9, ease: 'expo.out' });
+      gsap.fromTo(flash, { opacity: .7, scale: .85 }, { opacity: 0, scale: 1.15, duration: 1.4, ease: 'power2.out' });
     } else if (t < T60) passed60 = false;
   }
   renderRun();

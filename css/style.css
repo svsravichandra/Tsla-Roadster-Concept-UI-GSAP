@@ -252,8 +252,9 @@ html:not(.js) .loader { display: none; }
 .tl-mark.is-hit { opacity: 1; border-color: var(--signal); }
 .launch-flash {
   position: absolute; inset: 0; display: grid; place-items: center; pointer-events: none;
-  font-stretch: 125%; font-weight: 900; font-size: 60vw; line-height: 1; color: var(--signal); opacity: 0; mix-blend-mode: screen;
+  font-stretch: 125%; font-weight: 900; font-size: 26vw; line-height: 1; letter-spacing: -.05em; color: var(--signal); opacity: 0; mix-blend-mode: screen;
 }
+.launch-flash small { font-size: .4em; letter-spacing: 0; }
 
 /* ---------- Stunt ---------- */
 .stunt { position: relative; border-top: 1px solid var(--line); }
